@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-resource", "dotnet-resource\dotnet-resource.csproj", "{0DC47B22-0CEB-45E3-9992-2DFF2AFEA733}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0DC47B22-0CEB-45E3-9992-2DFF2AFEA733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DC47B22-0CEB-45E3-9992-2DFF2AFEA733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC47B22-0CEB-45E3-9992-2DFF2AFEA733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DC47B22-0CEB-45E3-9992-2DFF2AFEA733}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
