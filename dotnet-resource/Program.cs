@@ -1,5 +1,7 @@
+using dotnet_resource.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +12,8 @@ var configuration = builder.Configuration
     .Build();
 
 builder.Services.AddOpenApi();
-
+builder.Services.AddDbContext<TreeNodeDbContext>(opt =>
+    opt.UseInMemoryDatabase("TreeNodeDb"));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
