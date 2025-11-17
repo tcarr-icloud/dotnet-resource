@@ -1,16 +1,26 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", false, true)
+    .AddEnvironmentVariables()
+    .Build();
 
 builder.Services.AddOpenApi();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = "http://localhost:9090/realms/demo";
-        options.Audience = "api-client";
         options.RequireHttpsMetadata = false;
+        options.Authority = configuration["Authority"];
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+            ValidAudiences = configuration.GetSection("ValidAudiences").Get<List<string>>()
+        };
     });
 
 builder.Services.AddAuthorizationBuilder();
@@ -30,7 +40,7 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", [Authorize] () =>
+app.MapGet("/weatherforecast", [Authorize]() =>
     {
         var forecast = Enumerable.Range(1, 5).Select(index =>
                 new WeatherForecast
