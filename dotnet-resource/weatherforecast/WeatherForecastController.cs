@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace dotnet_resource.weatherforecast;
 
 [ApiController]
-[Route("weatherforecast")]
+[Route("api/weatherforecast")]
 public class WeatherForecastController : ControllerBase
 {
     private readonly List<string> _summaries = new()
@@ -11,7 +11,6 @@ public class WeatherForecastController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    // GET
     [HttpGet]
     public IActionResult Forecast()
     {

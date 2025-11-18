@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace dotnet_resource.TreeNode;
 
 [ApiController]
-[Route("treenode")]
+[Route("api/treenode")]
 public class TreeNodeController(TreeNodeDbContext context) : ControllerBase
 {
     [HttpGet]
