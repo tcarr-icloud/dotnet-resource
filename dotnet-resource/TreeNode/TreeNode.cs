@@ -1,14 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace dotnet_resource.TreeNode;
 
 public class TreeNode
 {
-    public long Id { get; init; }
-
-    [StringLength(255)] public required string Name { get; set; }
-
-    [StringLength(512)] public string? Description { get; set; }
-
-    public long? ParentId { get; init; }
+    public long Id { get; set; }
+    
+    public string Name { get; set; } = string.Empty;
+    
+    public List<TreeNode> Children { get; set; } = [];
 }

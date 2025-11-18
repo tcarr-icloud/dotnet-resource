@@ -16,25 +16,25 @@ GET {{dotnet_resource_HostAddress}}/api/weatherforecast
 Authorization: Bearer {{access_token}}
 
 ###
-GET {{dotnet_resource_HostAddress}}/api/treenode
+GET {{dotnet_resource_HostAddress}}/api/flatnode
 Authorization: Bearer {{access_token}}
 
 ###
-GET {{dotnet_resource_HostAddress}}/api/treenode/1
+GET {{dotnet_resource_HostAddress}}/api/flatnode/1
 Authorization: Bearer {{access_token}}
 
 ###
-POST {{dotnet_resource_HostAddress}}/api/treenode
+POST {{dotnet_resource_HostAddress}}/api/flatnode
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "name": "node-1",
-  "description": "Node 1"
+  "name": "fruits",
+  "description": "Fruits"
 }
 
 ###
-DELETE {{dotnet_resource_HostAddress}}/api/treenode/3
+DELETE {{dotnet_resource_HostAddress}}/api/flatnode/1
 Authorization: Bearer {{access_token}}
 
 ###

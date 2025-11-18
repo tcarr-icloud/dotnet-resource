@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using dotnet_resource.TreeNode;
+using dotnet_resource.FlatNode;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +13,7 @@ var configuration = builder.Configuration
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<TreeNodeDbContext>(options => 
+builder.Services.AddDbContext<FlatNodeDbContext>(options => 
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

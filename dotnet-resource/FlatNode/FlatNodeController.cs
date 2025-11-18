@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace dotnet_resource.TreeNode;
+namespace dotnet_resource.FlatNode;
 
 [ApiController]
-[Route("api/treenode")]
-public class TreeNodeController(TreeNodeDbContext context) : ControllerBase
+[Route("api/flatnode")]
+public class FlatNodeController(FlatNodeDbContext context) : ControllerBase
 {
     [HttpGet]
     public IActionResult Get()
@@ -21,7 +21,7 @@ public class TreeNodeController(TreeNodeDbContext context) : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] TreeNode node)
+    public IActionResult Post([FromBody] FlatNode node)
     {
         context.TreeNodes.Add(node);
         context.SaveChanges();
@@ -29,7 +29,7 @@ public class TreeNodeController(TreeNodeDbContext context) : ControllerBase
     }
 
     [HttpPut("{id:long}")]
-    public IActionResult Put(long id, [FromBody] TreeNode node)
+    public IActionResult Put(long id, [FromBody] FlatNode node)
     {
         var existingNode = context.TreeNodes.Find(id);
         if (existingNode == null) return NotFound();
