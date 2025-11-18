@@ -29,8 +29,8 @@ Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "name": "node-3",
-  "description": "Node 3"
+  "name": "node-1",
+  "description": "Node 1"
 }
 
 ###
