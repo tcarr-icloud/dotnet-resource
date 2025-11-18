@@ -13,7 +13,7 @@ var configuration = builder.Configuration
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<TreeNodeDbContext>(options =>
+builder.Services.AddDbContext<TreeNodeDbContext>(options => 
     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
