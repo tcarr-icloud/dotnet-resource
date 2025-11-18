@@ -1,13 +1,11 @@
-using FluentAssertions;
-using Xunit;
-
 namespace dotnet_resource.TreeNode;
 
+[TestClass]
 public class TreeNodeServiceTests
 {
     private readonly TreeNodeService _service = new();
 
-    [Fact]
+    [TestMethod]
     public void GetTree_SingleRootNode_ReturnsRootWithNoChildren()
     {
         // Arrange
@@ -20,13 +18,13 @@ public class TreeNodeServiceTests
         var result = _service.GetTree(flatNodes);
 
         // Assert
-        result.Should().HaveCount(1);
-        result[0].Id.Should().Be(1);
-        result[0].Name.Should().Be("Root");
-        result[0].Children.Should().BeEmpty();
+        Assert.HasCount(1, result);
+        Assert.AreEqual(1, result[0].Id);
+        Assert.AreEqual("Root", result[0].Name);
+        Assert.IsEmpty(result[0].Children);
     }
 
-    [Fact]
+    [TestMethod]
     public void GetTree_ParentChildHierarchy_BuildsCorrectTree()
     {
         // Arrange
@@ -41,16 +39,40 @@ public class TreeNodeServiceTests
         var result = _service.GetTree(flatNodes);
 
         // Assert
-        result.Should().HaveCount(1);
-        result[0].Id.Should().Be(1);
-        result[0].Children.Should().HaveCount(2);
-        result[0].Children[0].Id.Should().Be(2);
-        result[0].Children[0].Name.Should().Be("Child1");
-        result[0].Children[1].Id.Should().Be(3);
-        result[0].Children[1].Name.Should().Be("Child2");
+        Assert.HasCount(1, result);
+        Assert.AreEqual(1, result[0].Id);
+        Assert.HasCount(2, result[0].Children);
+        Assert.AreEqual(2, result[0].Children[0].Id);
+        Assert.AreEqual("Child1", result[0].Children[0].Name);
+        Assert.AreEqual(3, result[0].Children[1].Id);
+        Assert.AreEqual("Child2", result[0].Children[1].Name);
     }
 
-    [Fact]
+    [TestMethod]
+    public void GetTree_ParentChildHierarchy_BuildsCorrectTree_FlatnodesReversed()
+    {
+        // Arrange
+        var flatNodes = new List<FlatNode.FlatNode>
+        {
+            new() { Id = 3, Name = "Child2", ParentId = 1 },
+            new() { Id = 2, Name = "Child1", ParentId = 1 },
+            new() { Id = 1, Name = "Root", ParentId = null }
+        };
+
+        // Act
+        var result = _service.GetTree(flatNodes);
+
+        // Assert
+        Assert.HasCount(1, result);
+        Assert.AreEqual(1, result[0].Id);
+        Assert.HasCount(2, result[0].Children);
+        Assert.AreEqual(3, result[0].Children[0].Id);
+        Assert.AreEqual("Child2", result[0].Children[0].Name);
+        Assert.AreEqual(2, result[0].Children[1].Id);
+        Assert.AreEqual("Child1", result[0].Children[1].Name);
+    }
+
+    [TestMethod]
     public void GetTree_MultipleRoots_ReturnsAllRoots()
     {
         // Arrange
@@ -65,14 +87,14 @@ public class TreeNodeServiceTests
         var result = _service.GetTree(flatNodes);
 
         // Assert
-        result.Should().HaveCount(2);
-        result[0].Id.Should().Be(1);
-        result[0].Children.Should().HaveCount(1);
-        result[1].Id.Should().Be(2);
-        result[1].Children.Should().BeEmpty();
+        Assert.HasCount(2, result);
+        Assert.AreEqual(1, result[0].Id);
+        Assert.HasCount(1, result[0].Children);
+        Assert.AreEqual(2, result[1].Id);
+        Assert.IsEmpty(result[1].Children);
     }
 
-    [Fact]
+    [TestMethod]
     public void GetTree_OrphanNode_TreatsAsRoot()
     {
         // Arrange
@@ -86,12 +108,12 @@ public class TreeNodeServiceTests
         var result = _service.GetTree(flatNodes);
 
         // Assert
-        result.Should().HaveCount(2);
-        result.Should().Contain(n => n.Id == 1 && n.Name == "Root");
-        result.Should().Contain(n => n.Id == 2 && n.Name == "Orphan");
+        Assert.HasCount(2, result);
+        Assert.IsTrue(result.Any(n => n.Id == 1 && n.Name == "Root"));
+        Assert.IsTrue(result.Any(n => n.Id == 2 && n.Name == "Orphan"));
     }
 
-    [Fact]
+    [TestMethod]
     public void GetTree_EmptyList_ReturnsEmptyList()
     {
         // Arrange
@@ -101,10 +123,10 @@ public class TreeNodeServiceTests
         var result = _service.GetTree(flatNodes);
 
         // Assert
-        result.Should().BeEmpty();
+        Assert.IsEmpty(result);
     }
 
-    [Fact]
+    [TestMethod]
     public void GetTree_MultiLevelHierarchy_BuildsCompleteTree()
     {
         // Arrange
@@ -120,17 +142,17 @@ public class TreeNodeServiceTests
         var result = _service.GetTree(flatNodes);
 
         // Assert
-        result.Should().HaveCount(1);
-        result[0].Id.Should().Be(1);
-        result[0].Children.Should().HaveCount(1);
-        result[0].Children[0].Id.Should().Be(2);
-        result[0].Children[0].Children.Should().HaveCount(1);
-        result[0].Children[0].Children[0].Id.Should().Be(3);
-        result[0].Children[0].Children[0].Children.Should().HaveCount(1);
-        result[0].Children[0].Children[0].Children[0].Id.Should().Be(4);
+        Assert.HasCount(1, result);
+        Assert.AreEqual(1, result[0].Id);
+        Assert.HasCount(1, result[0].Children);
+        Assert.AreEqual(2, result[0].Children[0].Id);
+        Assert.HasCount(1, result[0].Children[0].Children);
+        Assert.AreEqual(3, result[0].Children[0].Children[0].Id);
+        Assert.HasCount(1, result[0].Children[0].Children[0].Children);
+        Assert.AreEqual(4, result[0].Children[0].Children[0].Children[0].Id);
     }
 
-    [Fact]
+    [TestMethod]
     public void GetTree_UsesDescriptionWhenAvailable_OtherwiseName()
     {
         // Arrange
@@ -144,7 +166,7 @@ public class TreeNodeServiceTests
         var result = _service.GetTree(flatNodes);
 
         // Assert
-        result[0].Name.Should().Be("Description1");
-        result[1].Name.Should().Be("Name2");
+        Assert.AreEqual("Description1", result[0].Name);
+        Assert.AreEqual("Name2", result[1].Name);
     }
 }
