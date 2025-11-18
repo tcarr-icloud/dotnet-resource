@@ -2,10 +2,10 @@ namespace dotnet_resource.TreeNode;
 
 public interface ITreeNodeService
 {
-    TreeNode GetTree(List<TreeNode> nodes);
+    List<TreeNode> GetTree(List<FlatNode.FlatNode> nodes);
 }
 
-public class TreeNodeService
+public class TreeNodeService : ITreeNodeService
 {
     public List<TreeNode> GetTree(List<FlatNode.FlatNode> flatNodes)
     {

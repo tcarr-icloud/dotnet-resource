@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using dotnet_resource.FlatNode;
+using dotnet_resource.TreeNode;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -32,6 +33,10 @@ builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSingleton<ITreeNodeService, TreeNodeService>();
 
 var app = builder.Build();
 

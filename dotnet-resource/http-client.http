@@ -12,7 +12,7 @@ password = {{clientSecret}}
 %}
 
 ###
-GET {{dotnet_resource_HostAddress}}/api/weatherforecast
+GET {{dotnet_resource_HostAddress}}/api/treenode
 Authorization: Bearer {{access_token}}
 
 ###
